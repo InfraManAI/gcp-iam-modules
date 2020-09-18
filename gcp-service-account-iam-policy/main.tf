@@ -11,27 +11,27 @@ locals {
 data "google_iam_policy" "policies"{
   for_each = var.policy_set_policy
   binding {
-    members =  each.value.members
-    role = each.value.roles[0]
+    members =  each.value.members_policy
+    role = each.value.roles_policy[0]
   }
 }
 
 resource "google_service_account" "sa-policy" {
   for_each = var.policy_set_policy
-  account_id = var.policy_set_policy[each.key].service_accounts[0]
-  display_name = var.policy_set_policy[each.key].desc
+  account_id = var.policy_set_policy[each.key].service_accounts_policy[0]
+  display_name = var.policy_set_policy[each.key].desc_policy
 }
 
 resource "google_service_account" "sa-binding" {
   for_each = var.policy_set_binding
-  account_id = var.policy_set_binding[each.key].service_accounts[0]
-  display_name = var.policy_set_binding[each.key].desc
+  account_id = var.policy_set_binding[each.key].service_accounts_binding[0]
+  display_name = var.policy_set_binding[each.key].desc_binding
 }
 
 resource "google_service_account" "sa-member" {
   for_each = var.policy_set_member
-  account_id = var.policy_set_member[each.key].service_accounts[0]
-  display_name = var.policy_set_member[each.key].desc
+  account_id = var.policy_set_member[each.key].service_accounts_member[0]
+  display_name = var.policy_set_member[each.key].desc_member
 }
 
 resource "google_service_account_iam_policy" "sa-iam-policy"{
