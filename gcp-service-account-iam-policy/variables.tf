@@ -13,7 +13,6 @@ variable "policy_set_policy" {
     members = list(string)
     service_accounts = list(string)
     roles = list(string)
-    mode = string
     desc = string
 
   })
@@ -23,7 +22,6 @@ variable "policy_set_policy" {
       members = []
       service_accounts = []
       roles = []
-      mode = ""
       desc = ""
     }
   }
@@ -34,7 +32,6 @@ variable "policy_set_binding" {
     members = list(string)
     service_accounts = list(string)
     roles = list(string)
-    mode = string
     desc = string
 
   })
@@ -44,7 +41,6 @@ variable "policy_set_binding" {
       members = []
       service_accounts = []
       roles = []
-      mode = ""
       desc = ""
     }
   }
@@ -56,7 +52,6 @@ variable "policy_set_member" {
     members = list(string)
     service_accounts = list(string)
     roles = list(string)
-    mode = string
     desc = string
 
   })
@@ -66,7 +61,6 @@ variable "policy_set_member" {
       members = []
       service_accounts = []
       roles = []
-      mode = ""
       desc = ""
     }
   }

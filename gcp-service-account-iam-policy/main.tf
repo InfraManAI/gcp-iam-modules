@@ -18,21 +18,18 @@ data "google_iam_policy" "policies"{
 
 resource "google_service_account" "sa-policy" {
   for_each = var.policy_set_policy
-
   account_id = var.policy_set_policy[each.key].service_accounts[0]
   display_name = var.policy_set_policy[each.key].desc
 }
 
 resource "google_service_account" "sa-binding" {
   for_each = var.policy_set_binding
-
   account_id = var.policy_set_binding[each.key].service_accounts[0]
   display_name = var.policy_set_binding[each.key].desc
 }
 
 resource "google_service_account" "sa-member" {
   for_each = var.policy_set_member
-
   account_id = var.policy_set_member[each.key].service_accounts[0]
   display_name = var.policy_set_member[each.key].desc
 }
