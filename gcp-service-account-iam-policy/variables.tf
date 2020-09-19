@@ -20,14 +20,6 @@ variable "policy_set_policy" {
 
   })
   )
-  default = {
-    pdefault = {
-      members_policy = []
-      service_accounts_policy = []
-      roles_policy = []
-      desc_policy = ""
-    }
-  }
 }
 
 variable "policy_set_binding" {
@@ -39,14 +31,6 @@ variable "policy_set_binding" {
     desc_binding = string
   })
   )
-  default = {
-    pdefault = {
-      members_binding = []
-      service_accounts_binding = []
-      roles_binding = []
-      desc_binding = ""
-    }
-  }
 }
 
 variable "policy_set_member" {
@@ -59,12 +43,4 @@ variable "policy_set_member" {
 
   })
   )
-  default = {
-    pdefault_member = {
-      members_member = []
-      service_accounts_member = []
-      roles_member= []
-      desc_member = ""
-    }
-  }
 }

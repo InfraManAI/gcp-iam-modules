@@ -6,12 +6,13 @@ locals {
   policy_set_policy = var.policy_set_policy
   policy_set_binding = var.policy_set_binding
   policy_set_member = var.policy_set_member
+
 }
 
 data "google_iam_policy" "policies"{
   for_each = var.policy_set_policy
   binding {
-    members =  each.value.members_policy
+    members =  [ "serviceAccount:${google_service_account.sa-policy[each.key].email}" ]
     role = each.value.roles_policy[0]
   }
 }
@@ -20,12 +21,6 @@ resource "google_service_account" "sa-policy" {
   for_each = var.policy_set_policy
   account_id = var.policy_set_policy[each.key].service_accounts_policy[0]
   display_name = var.policy_set_policy[each.key].desc_policy
-}
-
-resource "google_service_account" "sa-binding" {
-  for_each = var.policy_set_binding
-  account_id = var.policy_set_binding[each.key].service_accounts_binding[0]
-  display_name = var.policy_set_binding[each.key].desc_binding
 }
 
 resource "google_service_account" "sa-member" {
@@ -40,16 +35,20 @@ resource "google_service_account_iam_policy" "sa-iam-policy"{
   service_account_id = google_service_account.sa-policy[each.key].id
 }
 
-
-/*resource "google_service_account_iam_binding" "sa-iam-binding"{
-  for_each = var.policy_set
-  members = each.value.mode == "binding" ? each.value.members
-  role = var.role_binding
-  service_account_id = var.service_account_id_binding
-  condition = var.condition_binding
+data google_service_account "sa-binding"{
+  for_each = var.policy_set_binding
+  account_id = each.value.service_accounts_binding[0]
 }
 
+resource "google_service_account_iam_binding" "sa-iam-binding"{
+  for_each = var.policy_set_binding
+  members = each.value.members_binding
+  role = each.value.roles_binding[0]
+  service_account_id = data.google_service_account.sa-binding[each.key].name
+  //condition = var.condition_binding
+}
 
+/*
 resource "google_service_account_iam_member" "sa-iam-member" {
   for_each = var.policy_set
   member = var.members_member
